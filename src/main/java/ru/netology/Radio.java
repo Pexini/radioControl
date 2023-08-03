@@ -12,12 +12,12 @@ public class Radio {
         return currentVolume;
     }
 
-    public void setCurrentStation(int newcurrentStatin) {
-        currentStation = newcurrentStatin;
+    public void setCurrentStation(int newCurrentStation) {
+        currentStation = newCurrentStation;
     }
 
-    public void setCurrentVolume(int newcurrentVolume) {
-        currentVolume = newcurrentVolume;
+    public void setCurrentVolume(int newCurrentVolume) {
+        currentVolume = newCurrentVolume;
     }
 
     public void next() {
