@@ -6,122 +6,80 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class radioTest {
+
     @Test
-    public void nowStation() {
-        Radio radio = new Radio();
-        radio.setCurrentStation(0);
-        assertEquals(0, radio.getCurrentStation());
+    public void getTempNew() {
+        Radio radio = new Radio(6, 35);
+
+        assertEquals(0, radio.getMinCurrentStation());
+        assertEquals(9, radio.getMaxCurrentStation());
+        assertEquals(0, radio.getMinCurrentVolume());
+        assertEquals(100, radio.getMaxCurrentVolume());
+        assertEquals(6, radio.getCurrentStation());
+        assertEquals(35, radio.getCurrentVolume());
     }
 
     @Test
-    public void nowStation5() {
-        Radio radio = new Radio();
-        radio.setCurrentStation(5);
+    public void getNowParam() {
+        Radio radio = new Radio(5, 73);
+        radio.getCurrentStation();
+        radio.getCurrentVolume();
         assertEquals(5, radio.getCurrentStation());
+        assertEquals(73, radio.getCurrentVolume());
     }
 
     @Test
-    public void newStation15() {
-        Radio radio = new Radio();
-        radio.setCurrentStation(15);
-        return;
-    }
-
-    @Test
-    public void nextStation() {
-        Radio radio = new Radio();
+    public void changeParamNow() {
+        Radio radio = new Radio(7, 50);
         radio.setCurrentStation(5);
-        ;
+        radio.setCurrentVolume(75);
+        assertEquals(5, radio.getCurrentStation());
+        assertEquals(75, radio.getCurrentVolume());
+    }
+
+
+    @Test
+    public void newParamBeforeMax() {
+        Radio radio = new Radio(8, 99);
         radio.next();
-        assertEquals(6, radio.getCurrentStation());
-    }
-
-    @Test
-    public void nextStationAfter9() {
-        Radio radio = new Radio();
-        radio.setCurrentStation(9);
-        radio.next();
-        assertEquals(0, radio.getCurrentStation());
-    }
-
-    @Test
-    public void prevStation() {
-        Radio radio = new Radio();
-        radio.setCurrentStation(7);
-        ;
-        radio.prev();
-        assertEquals(6, radio.getCurrentStation());
-    }
-
-    @Test
-    public void prevStationAfter0() {
-        Radio radio = new Radio();
-        radio.setCurrentStation(0);
-        ;
-        radio.prev();
+        radio.increaseVolume();
         assertEquals(9, radio.getCurrentStation());
-    }
-
-    @Test
-    public void nowVolume() {
-        Radio radio = new Radio();
-        radio.setCurrentVolume(0);
-        assertEquals(0, radio.getCurrentVolume());
-    }
-
-    @Test
-    public void nowVolume50() {
-        Radio radio = new Radio();
-        radio.setCurrentVolume(50);
-        assertEquals(50, radio.getCurrentVolume());
-    }
-
-    @Test
-    public void newVolume100() {
-        Radio radio = new Radio();
-        radio.setCurrentVolume(100);
-        radio.increaseVolume();
         assertEquals(100, radio.getCurrentVolume());
     }
 
     @Test
-    public void nexVolumeAfter55() {
-        Radio radio = new Radio();
-        radio.setCurrentVolume(55);
+    public void newParamBeforeMin() {
+        Radio radio = new Radio(-1, -1);
+        radio.next();
         radio.increaseVolume();
-        assertEquals(56, radio.getCurrentVolume());
-    }
-
-    @Test
-    public void newVolumeAfter99() {
-        Radio radio = new Radio();
-        radio.setCurrentVolume(99);
-        ;
-        radio.increaseVolume();
-        assertEquals(100, radio.getCurrentVolume());
-    }
-
-    @Test
-    public void newVolumeUnder0() {
-        Radio radio = new Radio();
-        radio.setCurrentVolume(0);
-        radio.reduceVolume();
+        assertEquals(0, radio.getCurrentStation());
         assertEquals(0, radio.getCurrentVolume());
     }
 
     @Test
-    public void newVolumeUnder100() {
-        Radio radio = new Radio();
-        radio.setCurrentVolume(100);
+    public void newParamAfterMax() {
+        Radio radio = new Radio(9, 100);
+        radio.next();
+        radio.increaseVolume();
+        assertEquals(0, radio.getCurrentStation());
+        assertEquals(100, radio.getCurrentVolume());
+    }
+
+    @Test
+    public void newParamUnderMax() {
+        Radio radio = new Radio(9, 100);
+        radio.prev();
         radio.reduceVolume();
+        assertEquals(8, radio.getCurrentStation());
         assertEquals(99, radio.getCurrentVolume());
     }
 
     @Test
-    public void newVolumeUnder50() {
-        Radio radio = new Radio();
-        radio.setCurrentVolume(50);
+    public void newParamUnderMin() {
+        Radio radio = new Radio(0, 0);
+        radio.prev();
         radio.reduceVolume();
-        assertEquals(49, radio.getCurrentVolume());
+        assertEquals(9, radio.getCurrentStation());
+        assertEquals(0, radio.getCurrentVolume());
     }
 }
