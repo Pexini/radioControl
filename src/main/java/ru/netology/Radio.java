@@ -1,120 +1,92 @@
 package ru.netology;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
+
+
 public class Radio {
     private int minCurrentStation = 0;
     private int maxCurrentStation = 9;
     private int minCurrentVolume = 0;
     private int maxCurrentVolume = 100;
-    private int currentStation;
-    private int currentVolume;
+    private int currentStation = minCurrentStation;
+    private int currentVolume = minCurrentVolume;
 
-    public Radio() {
-        this.currentStation = this.minCurrentStation;
-        this.currentVolume = this.minCurrentVolume;
-    }
+    public Radio(int numRadio, int sizeVolume) {
+        currentStation = numRadio;
 
-    public Radio(int minCurrentStation, int maxCurrentStation, int minCurrentVolume, int maxCurrentVolume, int currentStation, int currentVolume) {
-        this.currentStation = this.minCurrentStation;
-        this.currentVolume = this.minCurrentVolume;
-        this.minCurrentStation = minCurrentStation;
-        this.maxCurrentStation = maxCurrentStation;
-        this.minCurrentVolume = minCurrentVolume;
-        this.maxCurrentVolume = maxCurrentVolume;
-        this.currentStation = currentStation;
-        this.currentVolume = currentVolume;
-    }
-
-    public int getMinCurrentStation() {
-        return this.minCurrentStation;
-    }
-
-    public int getMaxCurrentStation() {
-        return this.maxCurrentStation;
-    }
-
-    public int getMinCurrentVolume() {
-        return this.minCurrentVolume;
-    }
-
-    public int getMaxCurrentVolume() {
-        return this.maxCurrentVolume;
+        currentVolume = sizeVolume;
     }
 
     public int getCurrentStation() {
-        return this.currentStation;
+        return currentStation;
     }
 
     public int getCurrentVolume() {
-        return this.currentVolume;
+        return currentVolume;
     }
 
-    public void setMinCurrentStation(int minCurrentStation) {
-        this.minCurrentStation = minCurrentStation;
+    public int getMinCurrentStation() {
+        return minCurrentStation;
     }
 
-    public void setMaxCurrentStation(int maxCurrentStation) {
-        this.maxCurrentStation = maxCurrentStation;
+    public int getMaxCurrentStation() {
+        return maxCurrentStation;
     }
 
-    public void setMinCurrentVolume(int minCurrentVolume) {
-        this.minCurrentVolume = minCurrentVolume;
+    public int getMinCurrentVolume() {
+        return minCurrentVolume;
     }
 
-    public void setMaxCurrentVolume(int maxCurrentVolume) {
-        this.maxCurrentVolume = maxCurrentVolume;
+    public int getMaxCurrentVolume() {
+        return maxCurrentVolume;
     }
 
-    public void setCurrentStation(int currentStation) {
-        this.currentStation = currentStation;
+
+    public void setCurrentStation(int newCurrentStation) {
+        currentStation = newCurrentStation;
     }
 
-    public void setCurrentVolume(int currentVolume) {
-        this.currentVolume = currentVolume;
+    public void setCurrentVolume(int newCurrentVolume) {
+        currentVolume = newCurrentVolume;
     }
 
-    public boolean equals(Object o) {
-        if (o == this) {
-            return true;
-        } else if (!(o instanceof Radio)) {
-            return false;
+    public void next() {
+        if (currentStation == maxCurrentStation) {
+            currentStation = minCurrentStation;
         } else {
-            Radio other = (Radio) o;
-            if (!other.canEqual(this)) {
-                return false;
-            } else if (this.getMinCurrentStation() != other.getMinCurrentStation()) {
-                return false;
-            } else if (this.getMaxCurrentStation() != other.getMaxCurrentStation()) {
-                return false;
-            } else if (this.getMinCurrentVolume() != other.getMinCurrentVolume()) {
-                return false;
-            } else if (this.getMaxCurrentVolume() != other.getMaxCurrentVolume()) {
-                return false;
-            } else if (this.getCurrentStation() != other.getCurrentStation()) {
-                return false;
-            } else {
-                return this.getCurrentVolume() == other.getCurrentVolume();
-            }
+            currentStation++;
         }
     }
 
-    protected boolean canEqual(Object other) {
-        return other instanceof Radio;
+    public void prev() {
+        if (currentStation == minCurrentStation) {
+            currentStation = maxCurrentStation;
+        } else {
+            currentStation--;
+        }
     }
 
-    public int hashCode() {
-        int prime = 31;
-        int result = 1;
-        result = result * 59 + this.getMinCurrentStation();
-        result = result * 59 + this.getMaxCurrentStation();
-        result = result * 59 + this.getMinCurrentVolume();
-        result = result * 59 + this.getMaxCurrentVolume();
-        result = result * 59 + this.getCurrentStation();
-        result = result * 59 + this.getCurrentVolume();
-        return result;
+    public void increaseVolume() {
+        if (currentVolume == maxCurrentVolume) {
+            currentVolume = maxCurrentVolume;
+        } else {
+            currentVolume++;
+        }
     }
 
-    public String toString() {
-        int var10000 = this.getMinCurrentStation();
-        return "Radio(minCurrentStation=" + var10000 + ", maxCurrentStation=" + this.getMaxCurrentStation() + ", minCurrentVolume=" + this.getMinCurrentVolume() + ", maxCurrentVolume=" + this.getMaxCurrentVolume() + ", currentStation=" + this.getCurrentStation() + ", currentVolume=" + this.getCurrentVolume() + ")";
+    public void reduceVolume() {
+        if (currentVolume <= minCurrentVolume) {
+            currentVolume = minCurrentVolume;
+        } else {
+            currentVolume--;
+        }
     }
 }
+
+
